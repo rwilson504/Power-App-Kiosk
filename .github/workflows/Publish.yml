@@ -30,15 +30,17 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.x    
+          dotnet-version: 5.0.x
+      
+      - name: Get tag name
+        uses: olegtarasov/get-tag@v2.1.1
         
       - name: Build
         shell: bash
         run: |
-          tag=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-          release_name="PowerAppKiosk-$tag-${{ matrix.target }}"
+          release_name="PowerAppKiosk-${{ GIT_TAG_NAME }}-${{ matrix.target }}"
           # Build everything
-          dotnet publish --framework net5.0 --runtime "${{ matrix.target }}" -c Release -o "$release_name" -p:PublishReadyToRun=true
+          dotnet publish --framework net5.0 --runtime "${{ matrix.target }}" -c Release -o "$release_name" -p:PublishReadyToRun=true --self-contained false
           # Pack files
           if [ "${{ matrix.target }}" == "win-x64" ]; then
             # Pack to zip for Windows
