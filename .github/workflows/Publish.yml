@@ -1,3 +1,7 @@
+# To create a new release run the following commands in the console
+# git tag v1.0.9
+# git push --tags
+
 name: Publish
 
 # Run on every commit tag which begins with "v" (e.g., "v0.1.4")
@@ -10,6 +14,7 @@ jobs:
   release:
     name: Release
     strategy:
+      # Utilizing a matrix strategy creates a loop so all steps run per environment
       matrix:
         kind: ['linux', 'windows', 'macOS']
         include:
@@ -24,17 +29,22 @@ jobs:
             target: osx-x64
     runs-on: ${{ matrix.os }}
     steps:
+      # checkout the current repo
       - name: Checkout
         uses: actions/checkout@v2
 
+      # add donet to the environment to build the project
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.x
       
+      # Gets the current tag name and saved it to variable GIT_TAG_NAME for use
+      # in the Build script.
       - name: Get tag name
         uses: olegtarasov/get-tag@v2.1.1
-        
+      
+      # Runs the publish command to build a release version of the software
       - name: Build
         shell: bash
         run: |
@@ -50,6 +60,8 @@ jobs:
           fi
           # Delete output directory
           rm -r "$release_name"
+      
+      #Publishes the release
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
