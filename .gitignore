@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+PowerAppKiosk/App.Debug.config
+PowerAppKiosk/App.Release.config
