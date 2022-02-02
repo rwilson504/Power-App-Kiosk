@@ -38,7 +38,7 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          release_name="PowerAppKiosk-${{ GIT_TAG_NAME }}-${{ matrix.target }}"
+          release_name="PowerAppKiosk-$GIT_TAG_NAME-${{ matrix.target }}"
           # Build everything
           dotnet publish --framework net5.0 --runtime "${{ matrix.target }}" -c Release -o "$release_name" -p:PublishReadyToRun=true --self-contained false
           # Pack files
