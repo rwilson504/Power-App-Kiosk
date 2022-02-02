@@ -20,3 +20,5 @@ After you have created your release specific config files you can now update the
 
 ## Run
 After you have updated the configuration file just run the PowerAppKiosk.exe file to launch.
+
+
