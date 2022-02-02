@@ -41,7 +41,7 @@ jobs:
           tag=$RELEASE_VERSION
           release_name="PowerAppKiosk-$tag-${{ matrix.target }}"
           # Build everything
-          dotnet publish --framework net5.0 --runtime "${{ matrix.target }}" -c Release -o "$release_name"
+          dotnet publish --framework net5.0 --runtime "${{ matrix.target }}" -c Release -o "$release_name" -p:PublishReadyToRun=true
           # Pack files
           if [ "${{ matrix.target }}" == "win-x64" ]; then
             # Pack to zip for Windows
